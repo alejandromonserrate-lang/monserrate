@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="¿Cómo funciona Internet? Una presentación escolar interactiva con estética cyber.">
+<title>NET//LAB — ¿Cómo funciona Internet?</title>
+<style>
+:root{
+  --bg:#05070b;--panel:#0b1017;--panel2:#101923;--text:#e9fff5;--muted:#91aaa0;
+  --green:#35ff9b;--cyan:#39dfff;--violet:#9d7cff;--yellow:#ffe66d;--red:#ff6685;
+  --line:rgba(53,255,155,.18);--shadow:0 0 40px rgba(53,255,155,.08);
+}
+*{box-sizing:border-box;scroll-behavior:smooth}
+html{background:var(--bg)}
+body{margin:0;background:
+radial-gradient(circle at 80% 5%,rgba(57,223,255,.09),transparent 30%),
+radial-gradient(circle at 10% 35%,rgba(157,124,255,.08),transparent 28%),
+#05070b;color:var(--text);font-family:"Segoe UI",ui-monospace,SFMono-Regular,Consolas,monospace;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:40px 40px;mask-image:linear-gradient(to bottom,black,transparent 85%);z-index:-1}
+a{color:inherit;text-decoration:none}button{font:inherit}
+nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;background:rgba(5,7,11,.84);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--green)}.cursor{animation:blink 1s infinite}@keyframes blink{50%{opacity:0}}
+.navlinks{display:flex;gap:22px;color:var(--muted);font-size:12px}.navlinks a:hover{color:var(--green)}
+.progress{width:150px;height:5px;background:#142019;border-radius:99px;overflow:hidden}.progress i{display:block;width:0;height:100%;background:var(--green);box-shadow:0 0 12px var(--green)}
+main{padding-top:64px}section{min-height:100vh;padding:95px 7vw;display:flex;align-items:center}.wrap{width:min(1180px,100%);margin:auto}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}.tag{display:inline-block;border:1px solid var(--line);padding:8px 12px;border-radius:5px;color:var(--green);font-size:12px;background:rgba(53,255,155,.04)}
+h1{font-size:clamp(48px,7vw,92px);line-height:.9;letter-spacing:-.07em;margin:18px 0;color:white}h1 span{color:var(--green);text-shadow:0 0 28px rgba(53,255,155,.35)}
+h2{font-size:clamp(34px,5vw,58px);line-height:1;letter-spacing:-.05em;margin:0 0 18px}h3{margin:0 0 9px;font-size:20px}
+.lead{font-size:18px;line-height:1.7;color:var(--muted);max-width:650px}
+.btn{border:1px solid var(--green);background:rgba(53,255,155,.08);color:var(--green);padding:14px 20px;border-radius:5px;font-weight:900;cursor:pointer;box-shadow:0 0 20px rgba(53,255,155,.08);transition:.2s}.btn:hover{background:var(--green);color:#031008;box-shadow:0 0 30px rgba(53,255,155,.3);transform:translateY(-2px)}
+.terminal{border:1px solid var(--line);background:linear-gradient(145deg,#07100d,#0a1118);border-radius:10px;box-shadow:var(--shadow);overflow:hidden}
+.term-head{height:38px;padding:0 13px;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--line);color:#6d8179;font-size:11px}.dot{width:8px;height:8px;border-radius:50%;background:#29483b}.dot:nth-child(2){background:#4d5a27}.dot:nth-child(3){background:#28615b}.term-body{padding:25px;min-height:360px}.prompt{color:var(--green)}.cyan{color:var(--cyan)}.violet{color:var(--violet)}.yellow{color:var(--yellow)}
+.network{height:270px;position:relative;margin-top:20px}.line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);transform-origin:left center;animation:pulse 2s infinite}.l1{left:21%;top:47%;width:27%;transform:rotate(-25deg)}.l2{left:47%;top:38%;width:28%;transform:rotate(24deg)}.l3{left:47%;top:38%;width:27%;transform:rotate(155deg)}.l4{left:47%;top:38%;width:27%;transform:rotate(65deg)}@keyframes pulse{50%{opacity:.3;box-shadow:0 0 12px var(--green)}}
+.node{position:absolute;width:82px;height:82px;border:1px solid var(--line);border-radius:8px;background:#0b1513;display:grid;place-items:center;text-align:center;font-size:29px;box-shadow:0 0 25px rgba(53,255,155,.05)}.node small{display:block;font-size:9px;color:var(--muted)}.a{left:4%;top:30%}.b{left:42%;top:8%;width:95px;height:95px;border-color:rgba(57,223,255,.35)}.c{right:3%;top:31%}.d{left:40%;bottom:3%}
+.card{background:rgba(11,16,23,.82);border:1px solid var(--line);border-radius:8px;padding:25px;box-shadow:var(--shadow)}.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.num{display:inline-grid;place-items:center;width:38px;height:38px;border:1px solid var(--green);color:var(--green);border-radius:5px;margin-bottom:15px;font-weight:900}.callout{border-left:3px solid var(--green);padding:15px 18px;background:rgba(53,255,155,.045);color:#c9ddd4;margin-top:20px;line-height:1.6}
+.code{font-size:14px;line-height:2;background:#05090d;border:1px solid var(--line);padding:20px;border-radius:6px;overflow:auto}.code b{color:var(--green)}.code i{color:var(--violet);font-style:normal}.code em{color:var(--cyan);font-style:normal}
+.flow{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:28px}.box{background:#08100d;border:1px solid var(--line);padding:17px 19px;border-radius:6px;text-align:center;min-width:125px}.arrow{color:var(--green);font-size:23px}
+.packets{display:flex;gap:9px;justify-content:center;margin:28px 0}.packet{width:34px;height:28px;border:1px solid var(--green);background:rgba(53,255,155,.09);display:grid;place-items:center;font-size:12px;animation:packet 1.7s ease-in-out infinite alternate}.packet:nth-child(2){animation-delay:.15s}.packet:nth-child(3){animation-delay:.3s}.packet:nth-child(4){animation-delay:.45s}.packet:nth-child(5){animation-delay:.6s}@keyframes packet{to{transform:translateY(-13px);box-shadow:0 0 15px rgba(53,255,155,.25)}}
+.journey{display:grid;grid-template-columns:1fr 1fr;gap:25px}.screen{background:#030806;border:1px solid var(--line);border-radius:7px;padding:22px;min-height:410px}.track{height:190px;position:relative;margin:15px 0}.route{position:absolute;left:8%;right:8%;top:50%;height:2px;background:#18362b}.moving{position:absolute;left:8%;top:calc(50% - 10px);transition:left 1s ease}.steps{display:grid;gap:8px}.step{padding:13px;border:1px solid rgba(53,255,155,.12);border-radius:5px;background:#09100e;color:#71877e;cursor:pointer}.step.active{color:var(--green);border-color:var(--line);background:rgba(53,255,155,.05)}
+.quiz{max-width:760px;margin:auto}.answers{display:grid;gap:10px;margin-top:18px}.answer{border:1px solid var(--line);background:#09100e;color:var(--text);padding:14px;text-align:left;border-radius:5px;cursor:pointer}.answer:hover{border-color:var(--green);color:var(--green)}.result{min-height:25px;margin-top:15px;font-weight:900}
+footer{padding:50px 7vw;border-top:1px solid var(--line);color:var(--muted)}.footer-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.green{color:var(--green)}
+.reveal{opacity:0;transform:translateY(28px);transition:.7s ease}.reveal.visible{opacity:1;transform:none}
+@media(max-width:850px){.navlinks{display:none}.hero-grid,.two,.journey{grid-template-columns:1fr}.three{grid-template-columns:1fr}section{padding:80px 5vw}h1{font-size:58px}.progress{width:85px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<nav>
+<a class="brand" href="#inicio">[ NET//LAB <span class="cursor">_</span> ]</a>
+<div class="navlinks"><a href="#conceptos">CONCEPTOS</a><a href="#viaje">SIMULACIÓN</a><a href="#quiz">QUIZ</a></div>
+<div class="progress"><i id="bar"></i></div>
+</nav>
+
+<main>
+<section id="inicio">
+<div class="wrap hero-grid">
+<div class="reveal">
+<div class="tag">&gt; SISTEMA EDUCATIVO // ONLINE</div>
+<h1>¿CÓMO<br>FUNCIONA<br><span>INTERNET?</span></h1>
+<p class="lead">Explora el viaje de una información desde tu dispositivo hasta un servidor y de regreso.</p>
+<a class="btn" href="#conceptos">&gt; INICIAR_EXPLORACIÓN</a>
+</div>
+<div class="terminal reveal">
+<div class="term-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span> netlab://internet</div>
+<div class="term-body">
+<div><span class="prompt">student@netlab:~$</span> conectar --internet</div>
+<div class="cyan" style="margin-top:14px">[ OK ] preparando red...</div>
+<div class="cyan">[ OK ] buscando servidores...</div>
+<div class="yellow">[ INFO ] ruta disponible</div>
+<div class="network">
+<div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="line l4"></div>
+<div class="node a">💻<small>DEVICE</small></div><div class="node b">🌐<small>INTERNET</small></div><div class="node c">🖥️<small>SERVER</small></div><div class="node d">📡<small>ROUTER</small></div>
+</div>
+<div><span class="prompt">student@netlab:~$</span> <span class="cursor">█</span></div>
+</div></div>
+</div>
+</section>
+
+<section id="conceptos"><div class="wrap reveal">
+<div class="num">01</div><h2>Internet = una red de redes</h2>
+<p class="lead">No es una sola máquina. Es una gigantesca colección de redes y dispositivos conectados entre sí.</p>
+<div class="three" style="margin-top:30px">
+<div class="card"><h3>🏠 CASA</h3><p>Tu teléfono, computador y otros dispositivos pueden formar una red local.</p></div>
+<div class="card"><h3>🏫 COLEGIO</h3><p>Un colegio puede tener muchos dispositivos conectados a su propia red.</p></div>
+<div class="card"><h3>🌎 INTERNET</h3><p>Las redes se conectan entre sí para permitir la comunicación.</p></div>
+</div>
+<div class="callout"><strong class="green">ANALOGÍA:</strong> imagina muchas carreteras conectadas. Cada red es como una zona de carreteras y los routers ayudan a encontrar caminos.</div>
+</div></section>
+
+<section><div class="wrap reveal"><div class="num">02</div><h2>Tu dispositivo inicia la comunicación</h2>
+<p class="lead">Cuando visitas una página, tu navegador necesita pedir información a otro computador: un servidor.</p>
+<div class="flow"><div class="box">👤<br><small>USUARIO</small></div><div class="arrow">→</div><div class="box">💻<br><small>DISPOSITIVO</small></div><div class="arrow">→</div><div class="box">📡<br><small>ROUTER</small></div></div>
+<div class="code" style="margin-top:25px"><b>REQUEST</b> <i>GET</i> <em>/pagina</em><br><span style="color:#71877e">// el navegador solicita recursos al servidor</span></div>
+</div></section>
+
+<section><div class="wrap reveal"><div class="num">03</div><h2>IP: la dirección del dispositivo</h2>
+<div class="two"><div><p class="lead">Para comunicarse, los dispositivos utilizan direcciones de red. Una dirección IP ayuda a identificar un destino.</p><div class="card"><div class="green" style="font-size:30px;font-weight:900">142.250.72.14</div><small>Dirección IP de ejemplo</small></div></div>
+<div class="card"><h3>📬 Piensa en una dirección</h3><p>Así como una carta necesita una dirección para llegar a un lugar, los datos necesitan información de destino para viajar por una red.</p></div></div>
+</div></section>
+
+<section><div class="wrap reveal"><div class="num">04</div><h2>DNS: la agenda de Internet</h2>
+<p class="lead">Recordar números sería difícil. Por eso usamos nombres de dominio.</p>
+<div class="flow"><div class="box">🌐<br><b>ejemplo.com</b></div><div class="arrow">→</div><div class="box">🔎<br><b>DNS</b></div><div class="arrow">→</div><div class="box">📍<br><b>142.250.72.14</b></div></div>
+<div class="callout"><strong class="green">DNS:</strong> ayuda a descubrir qué dirección corresponde al nombre que escribiste.</div>
+</div></section>
+
+<section><div class="wrap reveal"><div class="num">05</div><h2>Los datos viajan en paquetes</h2>
+<p class="lead">Una información puede dividirse en pequeñas partes para viajar por la red.</p>
+<div class="card"><div style="text-align:center;font-size:50px">📨</div><div class="packets"><span class="packet">01</span><span class="packet">02</span><span class="packet">03</span><span class="packet">04</span><span class="packet">05</span></div><p style="text-align:center;color:var(--muted)">Al llegar al destino, las partes pueden reunirse para reconstruir la información.</p></div>
+</div></section>
+
+<section><div class="wrap reveal"><div class="num">06</div><h2>Routers: los que ayudan a elegir el camino</h2>
+<p class="lead">Los routers reciben información y ayudan a dirigirla hacia otros puntos de la red.</p>
+<div class="flow"><div class="box">💻<br>Origen</div><div class="arrow">→</div><div class="box">📡<br>Router 1</div><div class="arrow">→</div><div class="box">📡<br>Router 2</div><div class="arrow">→</div><div class="box">🖥️<br>Destino</div></div>
+</div></section>
+
+<section id="viaje"><div class="wrap reveal"><div class="num">07</div><h2>SIMULACIÓN // EL VIAJE</h2>
+<p class="lead">Presiona el botón y observa una versión simplificada del recorrido.</p>
+<div class="journey" style="margin-top:25px"><div class="screen">
+<div class="green">student@netlab:~$ send_request</div><div class="track"><div class="route"></div><span style="position:absolute;left:2%;top:57%;font-size:28px">💻</span><span style="position:absolute;right:2%;top:57%;font-size:28px">🖥️</span><span id="moving" class="moving">📦</span></div>
+<button class="btn" id="send">&gt; ENVIAR_SOLICITUD</button>
+</div><div class="steps" id="steps">
+<div class="step active">01 · Escribes la dirección</div><div class="step">02 · DNS encuentra la IP</div><div class="step">03 · Se prepara la solicitud</div><div class="step">04 · Los paquetes viajan</div><div class="step">05 · Llegan al servidor</div><div class="step">06 · El servidor responde</div><div class="step">07 · El navegador muestra la página</div>
+</div></div></div></section>
+
+<section><div class="wrap reveal"><div class="num">08</div><h2>El servidor responde</h2>
+<div class="two"><div class="card"><h3 class="green">REQUEST</h3><p>“Servidor, necesito esta página.”</p></div><div class="card"><h3 class="cyan">RESPONSE</h3><p>“Aquí están los recursos que necesitas.”</p></div></div>
+<div class="flow"><div class="box">💻</div><div class="arrow">→</div><div class="box">🌎</div><div class="arrow">→</div><div class="box">🖥️</div><div class="arrow">↩</div><div class="box">💻</div></div>
+</div></section>
+
+<section><div class="wrap reveal"><div class="num">09</div><h2>El navegador construye lo que ves</h2>
+<p class="lead">El servidor puede enviar recursos como HTML, CSS y JavaScript. El navegador los interpreta y crea la página.</p>
+<div class="flow"><div class="box"><b class="green">HTML</b><br>estructura</div><div class="box"><b class="cyan">CSS</b><br>diseño</div><div class="box"><b class="violet">JavaScript</b><br>interacción</div><div class="arrow">→</div><div class="box">🌐<br>página web</div></div>
+</div></section>
+
+<section><div class="wrap reveal"><div class="num">10</div><h2>Internet ≠ Web</h2>
+<div class="two"><div class="card"><h3 class="green">INTERNET</h3><p>La infraestructura y las redes que permiten conectar dispositivos.</p><div style="font-size:65px">🛣️🌎</div></div><div class="card"><h3 class="cyan">WEB</h3><p>Uno de los servicios que utiliza Internet para ofrecer páginas y aplicaciones web.</p><div style="font-size:65px">🕸️🌐</div></div></div>
+</div></section>
+
+<section><div class="wrap reveal"><div class="num">11</div><h2>Seguridad digital</h2>
+<p class="lead">Aprender cómo funciona Internet también significa aprender a utilizarlo responsablemente.</p>
+<div class="three">
+<div class="card">🔐<h3>Contraseñas</h3><p>No compartas tus contraseñas.</p></div>
+<div class="card">🔎<h3>Enlaces</h3><p>Piensa antes de hacer clic y verifica la información.</p></div>
+<div class="card">🛡️<h3>Ayuda</h3><p>Si algo te preocupa, habla con un adulto de confianza.</p></div>
+</div>
+</div></section>
+
+<section id="quiz"><div class="wrap reveal quiz">
+<div style="text-align:center"><div class="tag">&gt; KNOWLEDGE_CHECK</div><h2>MINI QUIZ</h2><p class="lead" style="margin:auto">Comprueba lo aprendido.</p></div>
+<div class="card" style="margin-top:28px"><h3 id="question"></h3><div class="answers" id="answers"></div><div id="result" class="result"></div><button id="next" class="btn" style="display:none;margin-top:12px">SIGUIENTE →</button></div>
+</div></section>
+</main>
+
+<footer><div class="footer-inner"><div><strong class="green">NET//LAB</strong><br>¿Cómo funciona Internet?</div><div>Proyecto educativo · HTML + CSS + JavaScript · <a class="green" href="#inicio">VOLVER ARRIBA ↑</a></div></div></footer>
+
+<script>
+const reveal=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});
+reveal.forEach(e=>io.observe(e));
+const bar=document.getElementById('bar');
+addEventListener('scroll',()=>{let m=document.documentElement.scrollHeight-innerHeight;bar.style.width=(m?scrollY/m*100:0)+'%'},{passive:true});
+
+const steps=[...document.querySelectorAll('.step')], moving=document.getElementById('moving');
+document.getElementById('send').onclick=()=>{
+  let i=0;steps.forEach(s=>s.classList.remove('active'));steps[0].classList.add('active');moving.style.left='8%';
+  clearInterval(window.sim);
+  window.sim=setInterval(()=>{if(i<steps.length){steps.forEach(s=>s.classList.remove('active'));steps[i].classList.add('active');moving.style.left=(8+i*14)+'%';i++}else{clearInterval(window.sim)}},850);
+};
+
+const qs=[
+['¿Qué es Internet?',['Una sola computadora','Una red de redes','Un navegador','Una contraseña'],1],
+['¿Qué hace el DNS?',['Ayuda a encontrar la IP asociada a un dominio','Crea el teclado','Acelera el monitor','Guarda electricidad'],0],
+['¿Qué son los paquetes?',['Pequeñas partes de información que viajan por la red','Computadores completos','Contraseñas','Páginas impresas'],0],
+['¿Qué hace un router?',['Ayuda a dirigir el tráfico de datos','Escribe HTML automáticamente','Es un navegador','Es un servidor siempre'],0],
+['¿Qué interpreta HTML, CSS y JavaScript para mostrar una página?',['El navegador','El teclado','El router','El cable'],0]
+];
+let qi=0;
+const q=document.getElementById('question'),a=document.getElementById('answers'),r=document.getElementById('result'),n=document.getElementById('next');
+function render(){let x=qs[qi];q.textContent=(qi+1)+'. '+x[0];a.innerHTML='';r.textContent='';n.style.display='none';x[1].forEach((t,i)=>{let b=document.createElement('button');b.className='answer';b.textContent=String.fromCharCode(65+i)+'. '+t;b.onclick=()=>{[...a.children].forEach(v=>v.disabled=true);if(i===x[2]){r.textContent='[ OK ] Respuesta correcta';r.style.color='var(--green)'}else{r.textContent='[ ! ] No exactamente. Inténtalo de nuevo con el siguiente paso.';r.style.color='var(--red)'}n.style.display='inline-block'};a.appendChild(b)})}
+n.onclick=()=>{qi++;if(qi<qs.length)render();else{q.textContent='[ MISSION_COMPLETE ]';a.innerHTML='<p>🎉 Terminaste el recorrido. Ahora puedes explicar el viaje de una solicitud web con tus propias palabras.</p>';r.textContent='';n.style.display='none'}};render();
+</script>
+</body>
+</html>
